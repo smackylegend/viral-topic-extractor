@@ -53,6 +53,7 @@ if st.button("Fetch Data"):
                 "publishedAfter": start_date,
                 "maxResults": 5,
                 "key": API_KEY,
+                "videoDuration": duration,
             }
 
             # Fetch video data
