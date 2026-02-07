@@ -145,32 +145,3 @@ if st.button("Fetch Data"):
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
-
-
-# ---------------------------------
-# Keywords Editor (UI)
-# ---------------------------------
-DEFAULT_KEYWORDS = [
-    "Affair Relationship Stories", "Reddit Update", "Reddit Relationship Advice", "Reddit Relationship",
-    "Reddit Cheating", "AITA Update", "Open Marriage", "Open Relationship", "X BF Caught",
-    "Stories Cheat", "X GF Reddit", "AskReddit Surviving Infidelity", "GurlCan Reddit",
-    "Cheating Story Actually Happened", "Cheating Story Real", "True Cheating Story",
-    "Reddit Cheating Story", "R/Surviving Infidelity", "Surviving Infidelity",
-    "Reddit Marriage", "Wife Cheated I Can't Forgive", "Reddit AP", "Exposed Wife",
-    "Cheat Exposed"
-]
-
-if "keywords_text" not in st.session_state:
-    st.session_state.keywords_text = "\n".join(DEFAULT_KEYWORDS)
-
-st.sidebar.header("Keywords")
-st.session_state.keywords_text = st.sidebar.text_area(
-    "One keyword per line",
-    value=st.session_state.keywords_text,
-    height=260
-)
-
-# Convert textarea → list
-keywords = [k.strip() for k in st.session_state.keywords_text.split("\n") if k.strip()]
-
-st.sidebar.caption(f"Active keywords: {len(keywords)}")
