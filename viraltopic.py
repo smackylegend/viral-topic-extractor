@@ -17,7 +17,7 @@ duration = "long"
 
 # List of broader keywords
 # List of broader keywords
-keywords = ["psychology of human behavior",
+keywords = [ "psychology of human behavior",
     "psychology facts that surprise",
     "psychology of overthinking",
     "human nature explained",
@@ -30,7 +30,22 @@ keywords = ["psychology of human behavior",
     "mental clarity tips",
     "introversion psychology",
     "stoicism psychology",
-    "mental health awareness"
+    "mental health awareness",
+    "psychology",
+    "human behavior",
+    "personality traits",
+    "mental health",
+    "behavioral science",
+    "social psychology",
+    "psychology facts",
+    "overthinking",
+    "introversion",
+    "stoicism",
+    "mind psychology",
+    "human nature",
+    "subconscious mind",
+    "thinking patterns",
+    "mental clarity"
 ]
 
 # Fetch Data Button
