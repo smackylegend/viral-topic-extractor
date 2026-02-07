@@ -1,3 +1,20 @@
+Viral Topics Tool
+
+
+
+
+
+Make youtube API (Google Cloud Console, and then enable youtube APi services)
+Github repository 
+Make app on streamlit 
+Go to streamlit cloud
+Sign In
+Launch your app
+
+
+Code: 
+
+
 import streamlit as st
 import requests
 from datetime import datetime, timedelta
@@ -13,17 +30,16 @@ st.title("YouTube Viral Topics Tool")
 
 # Input Fields
 days = st.number_input("Enter Days to Search (1-30):", min_value=1, max_value=30, value=5)
-duration = "medium"
 
 # List of broader keywords
-keywords = [ 
-    "HumanDepth",
-    "DeepPsychology",
-    "human behavior explained",
-    "cinematic psychology",
-    "rare personality traits",
-    "Psychology",
-    "RarePersonalities"
+keywords = [
+ "Affair Relationship Stories", "Reddit Update", "Reddit Relationship Advice", "Reddit Relationship", 
+"Reddit Cheating", "AITA Update", "Open Marriage", "Open Relationship", "X BF Caught", 
+"Stories Cheat", "X GF Reddit", "AskReddit Surviving Infidelity", "GurlCan Reddit", 
+"Cheating Story Actually Happened", "Cheating Story Real", "True Cheating Story", 
+"Reddit Cheating Story", "R/Surviving Infidelity", "Surviving Infidelity", 
+"Reddit Marriage", "Wife Cheated I Can't Forgive", "Reddit AP", "Exposed Wife", 
+"Cheat Exposed"
 ]
 
 # Fetch Data Button
@@ -44,7 +60,7 @@ if st.button("Fetch Data"):
                 "type": "video",
                 "order": "viewCount",
                 "publishedAfter": start_date,
-                "maxResults": 25,
+                "maxResults": 5,
                 "key": API_KEY,
             }
 
@@ -94,7 +110,7 @@ if st.button("Fetch Data"):
                 views = int(stat["statistics"].get("viewCount", 0))
                 subs = int(channel["statistics"].get("subscriberCount", 0))
 
-                if subs < 10000:  # Only include channels with fewer than 5,000 subscribers
+                if subs < 3000:  # Only include channels with fewer than 3,000 subscribers
                     all_results.append({
                         "Title": title,
                         "Description": description,
@@ -120,3 +136,4 @@ if st.button("Fetch Data"):
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
