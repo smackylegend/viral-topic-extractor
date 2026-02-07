@@ -15,7 +15,6 @@ st.title("YouTube Viral Topics Tool")
 days = st.number_input("Enter Days to Search (1-30):", min_value=1, max_value=30, value=5)
 
 # List of broader keywords
-# List of broader keywords
 keywords = [ 
     "HumanDepth",
     "DeepPsychology",
@@ -46,7 +45,6 @@ if st.button("Fetch Data"):
                 "publishedAfter": start_date,
                 "maxResults": 5,
                 "key": API_KEY,
-                "videoDuration": duration,
             }
 
             # Fetch video data
