@@ -11,6 +11,32 @@ YOUTUBE_CHANNEL_URL = "https://www.googleapis.com/youtube/v3/channels"
 # Streamlit App Title
 st.title("YouTube Viral Topics Tool")
 
+# -----------------------------
+# Keywords Editor (UI)
+# -----------------------------
+DEFAULT_KEYWORDS = [
+    "Affair Relationship Stories",
+    "Reddit Update",
+    "Reddit Relationship Advice",
+    "Reddit Relationship"
+]
+
+if "keywords_text" not in st.session_state:
+    st.session_state.keywords_text = "\n".join(DEFAULT_KEYWORDS)
+
+st.sidebar.header("Keywords")
+st.session_state.keywords_text = st.sidebar.text_area(
+    "One keyword per line",
+    value=st.session_state.keywords_text,
+    height=260
+)
+
+# ✅ THIS is the ONLY keywords list app will use
+keywords = [k.strip() for k in st.session_state.keywords_text.split("\n") if k.strip()]
+
+st.sidebar.caption(f"Active keywords: {len(keywords)}")
+
+
 # Input Fields
 days = st.number_input("Enter Days to Search (1-30):", min_value=1, max_value=30, value=5)
 
