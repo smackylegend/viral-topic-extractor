@@ -20,12 +20,7 @@ days = st.number_input("Last how many days? (default 3)", min_value=1, max_value
 
 st.caption("Keywords: one per line (apni marzi se edit karo)")
 default_kw = """Affair Relationship Stories
-Reddit Update
-Reddit Relationship Advice
-Reddit Cheating
-AITA Update
-Open Marriage
-Cheat Exposed"""
+"""
 
 keywords_text = st.text_area("Keywords", value=default_kw, height=160, key="kw_editor")
 keywords = [k.strip() for k in keywords_text.split("\n") if k.strip()]
