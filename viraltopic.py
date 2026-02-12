@@ -26,7 +26,10 @@ max_subs = st.number_input(
 )
 
 st.caption("Keywords: one per line (apni marzi se edit karo)")
-default_kw = """Affair Relationship Stories
+default_kw = """Psychology of People Who
+self improvement
+personal development
+personal growth
 """
 
 keywords_text = st.text_area("Keywords", value=default_kw, height=160, key="kw_editor")
