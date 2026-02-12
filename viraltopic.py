@@ -190,7 +190,7 @@ for ch_ids in chunk(channel_ids, 50):
 ch_id = meta.get("ChannelId", "")
 subs = channel_subs.get(ch_id)  # int or None
 
-    st.success(f"Found {len(df)} videos. Sorted by Views/Day (viral speed).")
+
 
     st.dataframe(
         df,
