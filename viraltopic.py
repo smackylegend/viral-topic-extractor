@@ -192,8 +192,6 @@ subs = channel_subs.get(ch_id)  # int or None
 
 
 
-vsn = (v.get("snippet") or {})
-vid_lang = vsn.get("defaultAudioLanguage") or vsn.get("defaultLanguage") or ""
 
     if not rows:
         st.warning("No stats rows. Try again.")
