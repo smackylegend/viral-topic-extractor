@@ -192,11 +192,6 @@ subs = channel_subs.get(ch_id)  # int or None
 
 
 
-
-    if not rows:
-        st.warning("No stats rows. Try again.")
-        st.stop()
-
     df = pd.DataFrame(rows).sort_values("Views/Day", ascending=False)
 
     st.success(f"Found {len(df)} videos. Sorted by Views/Day (viral speed).")
