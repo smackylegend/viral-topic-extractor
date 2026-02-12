@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 API_KEY = "AIzaSyAUHpprPXVoeRc9R_0vc77PXZEjxRXOUwg"   # ✅ better: Streamlit Secrets use karo
 YOUTUBE_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
 YOUTUBE_VIDEO_URL = "https://www.googleapis.com/youtube/v3/videos"
+YOUTUBE_CHANNEL_URL = "https://www.googleapis.com/youtube/v3/channels"
 
 st.set_page_config(page_title="Viral Topics Tool", layout="wide")
 st.title("YouTube Viral Topics Tool (Last Days Viral by Views)")
@@ -31,6 +32,21 @@ duration_filter = "medium" if exclude_shorts else "any"
 
 max_per_keyword = st.selectbox("Results per keyword", [10, 25, 50], index=2)
 
+max_subs = st.number_input(
+    "Max subscribers (0 = no filter)",
+    min_value=0, max_value=100_000_000, value=0, step=1000
+)
+
+lang_map = {
+    "Any": "",
+    "English": "en",
+    "Urdu": "ur",
+    "Hindi": "hi",
+    "Punjabi": "pa",
+    "Arabic": "ar",
+}
+lang_label = st.selectbox("Language (search hint)", list(lang_map.keys()), index=0)
+relevance_lang = lang_map[lang_label]
 # -----------------------------
 # HELPERS
 # -----------------------------
@@ -106,19 +122,41 @@ if st.button("Fetch Viral Videos"):
                     "Channel": sn.get("channelTitle", ""),
                     "PublishedAt": sn.get("publishedAt", ""),
                     "URL": f"https://www.youtube.com/watch?v={vid}",
+                    "ChannelId": sn.get("channelId", ""),
                 }
                 all_video_ids.append(vid)
 
     if not all_video_ids:
         st.warning("No videos collected. Try increasing days or turning off Exclude Shorts.")
         st.stop()
+        
+if not all_video_ids:
+    st.warning("No videos collected. Try increasing days or turning off Exclude Shorts.")
+    st.stop()
 
+    # Fetch channel subscribers
+channel_ids = list({m.get("ChannelId") for m in video_meta.values() if m.get("ChannelId")})
+channel_subs = {}  # channelId -> int subs or None if hidden
+
+for ch_ids in chunk(channel_ids, 50):
+    ch_params = {"part": "statistics", "id": ",".join(ch_ids), "key": API_KEY}
+    ch_data, err = yt_get(YOUTUBE_CHANNEL_URL, ch_params)
+    if err:
+        st.error(f"Channel stats error: {err}")
+        continue
+
+    for ch in (ch_data or {}).get("items", []):
+        cid = ch.get("id")
+        stats = (ch.get("statistics") or {})
+        subs = stats.get("subscriberCount")
+        channel_subs[cid] = int(subs) if subs is not None else None
+    
     # Fetch video stats in batches
     rows = []
     now = datetime.now(timezone.utc)
 
     for ids in chunk(all_video_ids, 50):
-        stats_params = {"part": "statistics", "id": ",".join(ids), "key": API_KEY}
+        stats_params = {"part": "statistics,snippet", "id": ",".join(ids), "key": API_KEY}
         stats_data, err = yt_get(YOUTUBE_VIDEO_URL, stats_params)
         if err:
             st.error(f"Stats error: {err}")
@@ -146,7 +184,17 @@ if st.button("Fetch Viral Videos"):
                 "Views": views,
                 "Views/Day": round(views_per_day, 2),
                 "URL": meta.get("URL", ""),
+                "Subscribers": subs,
+                "Language": vid_lang,
             })
+ch_id = meta.get("ChannelId", "")
+subs = channel_subs.get(ch_id)  # int or None
+
+if max_subs > 0 and subs is not None and subs > max_subs:
+    continue
+
+vsn = (v.get("snippet") or {})
+vid_lang = vsn.get("defaultAudioLanguage") or vsn.get("defaultLanguage") or ""
 
     if not rows:
         st.warning("No stats rows. Try again.")
