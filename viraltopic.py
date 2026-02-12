@@ -190,8 +190,7 @@ for ch_ids in chunk(channel_ids, 50):
 ch_id = meta.get("ChannelId", "")
 subs = channel_subs.get(ch_id)  # int or None
 
-if max_subs > 0 and subs is not None and subs > max_subs:
-    continue
+
 
 vsn = (v.get("snippet") or {})
 vid_lang = vsn.get("defaultAudioLanguage") or vsn.get("defaultLanguage") or ""
