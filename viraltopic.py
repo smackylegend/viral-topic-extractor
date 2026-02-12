@@ -7,7 +7,7 @@ import re
 # -----------------------------
 # CONFIG
 # -----------------------------
-API_KEY = st.secrets.get("AIzaSyAUHpprPXVoeRc9R_0vc77PXZEjxRXOUwg", "")  # Streamlit Secrets
+API_KEY = st.secrets.get("YOUTUBE_API_KEY", "AIzaSyAUHpprPXVoeRc9R_0vc77PXZEjxRXOUwg")  # Streamlit Secrets
 YOUTUBE_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
 YOUTUBE_VIDEO_URL = "https://www.googleapis.com/youtube/v3/videos"
 YOUTUBE_CHANNEL_URL = "https://www.googleapis.com/youtube/v3/channels"
