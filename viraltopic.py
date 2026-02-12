@@ -193,7 +193,8 @@ subs = channel_subs.get(ch_id)  # int or None
 if max_subs > 0 and subs is not None and subs > max_subs:
     continue
 
-
+vsn = (v.get("snippet") or {})
+vid_lang = vsn.get("defaultAudioLanguage") or vsn.get("defaultLanguage") or ""
 
     if not rows:
         st.warning("No stats rows. Try again.")
