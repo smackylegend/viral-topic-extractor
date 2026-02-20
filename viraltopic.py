@@ -35,7 +35,7 @@ personal growth
 keywords_text = st.text_area("Keywords", value=default_kw, height=160, key="kw_editor")
 keywords = [k.strip() for k in keywords_text.split("\n") if k.strip()]
 
-exclude_shorts = st.checkbox("Exclude Shorts (<60s)?", value=True)
+exclude_shorts = st.checkbox("Exclude Shorts (<120s)?", value=True)
 
 max_per_keyword = st.selectbox("Results per keyword", [10, 25, 50], index=2)
 
